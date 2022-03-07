@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 #%% Import data
 #This section will read only the diffraction data of the  csv  files in the folder
 # at the path "datapath" into a data frame.
-datpath = '../Cement/Scans/Files_organized_for_plots/Constant_NaOH_1mL10M_to_1gPC' # directory where data is stored relative to py script location
+datpath = '../../Cement/Scans/Files_organized_for_plots/Constant_NaOH_1mL10M_to_1gPC' # directory where data is stored relative to py script location
 f_name = (os.listdir(datpath))
 dataframe_of_frames = []
 
@@ -24,6 +24,7 @@ def my_data_extract(fram_index):
     a = np.array(tempArray.loc[:,'Angle'])
     b = np.array(tempArray.loc[:,' Intensity'])
     tempMatrix = np.vstack((a,b))
+    
     return  tempMatrix
 #takes extracts the angle and intesity data from one xrd file into a array
 Alax = my_data_extract(0)
@@ -43,6 +44,8 @@ Sico = my_data_extract(8)
 # plt.ylabel("Intensity (counts)")
 
 fig, ax = plt.subplots()  # Create a figure containing a single axes.
-ax.plot(Cent[0,:], Cent[1,:])
+ax.plot(Cent[0,:], Cent[1,:])#Graph 1
+ax.plot(Alco[0,:], Alco[1,:])#Graph 2
+ax.plot(Alax[0,:], Alxa[1,:])#Graph 3
 ax.set_xlabel("two theta")
-ax.setyxlabel("Intensity (counts)")
+ax.set_ylabel("Intensity (counts)")

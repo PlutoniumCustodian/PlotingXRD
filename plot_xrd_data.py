@@ -5,15 +5,16 @@ import matplotlib.pyplot as plt
 #%% Import data
 #This section will read only the diffraction data of the  csv  files in the folder
 # at the path "datapath" into a data frame.
-datpath = '../../Cement/Scans/Files_organized_for_plots/Constant_NaOH_1mL10M_to_1gPC' # directory where data is stored relative to py script location
-f_name = (os.listdir(datpath))
+datpath = 'Files_organized_for_plots/Constant_NaOH_1mL10M_to_1gPC' # directory where data is stored relative to py script location
+f_name = (os.listdir(datpath))#list of files in the directory of datpath
+f_howmany = range(len(f_name))
 dataframe_of_frames = []
 
-for x in f_name:
-    temp_df=pd.read_csv(os.path.join(datpath, f_name[0]),skiprows=(range(0, 25)))
+for x in f_howmany:
+    temp_df=pd.read_csv(os.path.join(datpath, f_name[x]),skiprows=(range(0, 25)))
     dataframe_of_frames.append(temp_df)
     # print(os.path.join(datpath, x))
-header=['Angle',' TimePerStep',' Intensity',' ESD'],
+# header=['Angle',' TimePerStep',' Intensity',' ESD'],
 #%% Name imported data
 #Use this section to give your data a useful name manually
 
@@ -24,7 +25,6 @@ def my_data_extract(fram_index):
     a = np.array(tempArray.loc[:,'Angle'])
     b = np.array(tempArray.loc[:,' Intensity'])
     tempMatrix = np.vstack((a,b))
-    
     return  tempMatrix
 #takes extracts the angle and intesity data from one xrd file into a array
 Alax = my_data_extract(0)
@@ -46,6 +46,6 @@ Sico = my_data_extract(8)
 fig, ax = plt.subplots()  # Create a figure containing a single axes.
 ax.plot(Cent[0,:], Cent[1,:])#Graph 1
 ax.plot(Alco[0,:], Alco[1,:])#Graph 2
-ax.plot(Alax[0,:], Alxa[1,:])#Graph 3
+ax.plot(Alax[0,:], Alax[1,:])#Graph 3
 ax.set_xlabel("two theta")
 ax.set_ylabel("Intensity (counts)")

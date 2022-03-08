@@ -37,15 +37,34 @@ Pco = my_data_extract(6)
 Siax = my_data_extract(7)
 Sico = my_data_extract(8)
 #%% Ploting XRD data
-#fig, ax = plt.subplot()
-# lnWidth = 0.5
-# plt.plot( Cent[0,:], Cent[1,:], linewidth = lnWidth )
-# plt.xlabel("two theta")
-# plt.ylabel("Intensity (counts)")
+from matplotlib.ticker import MultipleLocator
+from matplotlib.font_manager import FontProperties
 
-fig, ax = plt.subplots()  # Create a figure containing a single axes.
-ax.plot(Cent[0,:], Cent[1,:])#Graph 1
-ax.plot(Alco[0,:], Alco[1,:])#Graph 2
-ax.plot(Alax[0,:], Alax[1,:])#Graph 3
-ax.set_xlabel("two theta")
-ax.set_ylabel("Intensity (counts)")
+#Values for setting that are used multple places
+off_set = 7500 #used to shift graphs up or down
+lnthikness= 0.5
+ColorPalet = ['#0b173a', '#245e99', '#00b4ff']
+
+font = FontProperties()
+font.set_family('sans-serf')
+font.set_name('Arial')
+font.set_size(9)
+
+fig, ax = plt.subplots(figsize=(7.08,3)) #size is in inches
+ax.plot(Cent[0,:], Cent[1,:] + 2*off_set, label='Centroid', 
+        linewidth=lnthikness, color=ColorPalet[0])#Graph 1
+ax.plot(Alax[0,:], Alax[1,:] + 1*off_set, label='Al-Axial', 
+        linewidth=lnthikness, color=ColorPalet[1])#Graph 3
+ax.plot(Alco[0,:], Alco[1,:], label='Al-Corner', 
+        linewidth=lnthikness, color=ColorPalet[2])#Graph 2
+ax.set_xlabel("Two Theta (degrees)", fontsize=9)
+ax.set_ylabel("Intensity", fontsize=9)
+ax.tick_params(axis='x', labelsize=8)
+ax.tick_params(axis='y', labelsize=8)
+ax.xaxis.set_minor_locator(MultipleLocator(2.5))
+ax.yaxis.set_ticklabels([])
+ax.tick_params(axis='y',length=0)
+plt.legend()
+
+# Uncomment this line to save the figure.
+#fig.savefig('Plots/AL_1mL_to_1g.svg', transparent=False, bbox_inches="tight")

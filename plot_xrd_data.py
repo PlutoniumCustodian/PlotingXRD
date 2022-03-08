@@ -36,7 +36,7 @@ Pax = my_data_extract(5)
 Pco = my_data_extract(6)
 Siax = my_data_extract(7)
 Sico = my_data_extract(8)
-#%% Ploting XRD data
+#%% Ploting XRD data (Al 1mL NaOH per gram)
 from matplotlib.ticker import MultipleLocator
 from matplotlib.font_manager import FontProperties
 
@@ -68,3 +68,102 @@ plt.legend()
 
 # Uncomment this line to save the figure.
 #fig.savefig('Plots/AL_1mL_to_1g.svg', transparent=False, bbox_inches="tight")
+
+#%% Ploting XRD data (Mg 1mL NaOH per gram)
+from matplotlib.ticker import MultipleLocator
+from matplotlib.font_manager import FontProperties
+
+#Values for setting that are used multple places
+off_set = 7500 #used to shift graphs up or down
+lnthikness= 0.5
+ColorPalet = ['#0d3a0c', '#0e8d13', '#00ea00']
+
+font = FontProperties()
+font.set_family('sans-serf')
+font.set_name('Arial')
+font.set_size(9)
+
+fig, ax = plt.subplots(figsize=(7.08,3)) #size is in inches
+ax.plot(Cent[0,:], Cent[1,:] + 2*off_set, label='Centroid', 
+        linewidth=lnthikness, color=ColorPalet[0])#Graph 1
+ax.plot(Mgax[0,:], Mgax[1,:] + 1*off_set, label='Mg-Axial', 
+        linewidth=lnthikness, color=ColorPalet[1])#Graph 3
+ax.plot(Mgco[0,:], Mgco[1,:], label='Mg-Corner', 
+        linewidth=lnthikness, color=ColorPalet[2])#Graph 2
+ax.set_xlabel("Two Theta (degrees)", fontsize=9)
+ax.set_ylabel("Intensity", fontsize=9)
+ax.tick_params(axis='x', labelsize=8)
+ax.tick_params(axis='y', labelsize=8)
+ax.xaxis.set_minor_locator(MultipleLocator(2.5))
+ax.yaxis.set_ticklabels([])
+ax.tick_params(axis='y',length=0)
+plt.legend()
+
+# Uncomment this line to save the figure.
+#fig.savefig('Plots/Mg_1mL_to_1g.svg', transparent=False, bbox_inches="tight")
+
+#%% Ploting XRD data (Si 1mL NaOH per gram)
+from matplotlib.ticker import MultipleLocator
+from matplotlib.font_manager import FontProperties
+
+#Values for setting that are used multple places
+off_set = 7500 #used to shift graphs up or down
+lnthikness= 0.5
+ColorPalet = ['#3a0b0c', '#961430', '#ff005e']
+
+font = FontProperties()
+font.set_family('sans-serf')
+font.set_name('Arial')
+font.set_size(9)
+
+fig, ax = plt.subplots(figsize=(7.08,3)) #size is in inches
+ax.plot(Cent[0,:], Cent[1,:] + 2*off_set, label='Centroid', 
+        linewidth=lnthikness, color=ColorPalet[0])#Graph 1
+ax.plot(Siax[0,:], Siax[1,:] + 1*off_set, label='Si-Axial', 
+        linewidth=lnthikness, color=ColorPalet[1])#Graph 3
+ax.plot(Sico[0,:], Sico[1,:], label='Si-Corner', 
+        linewidth=lnthikness, color=ColorPalet[2])#Graph 2
+ax.set_xlabel("Two Theta (degrees)", fontsize=9)
+ax.set_ylabel("Intensity", fontsize=9)
+ax.tick_params(axis='x', labelsize=8)
+ax.tick_params(axis='y', labelsize=8)
+ax.xaxis.set_minor_locator(MultipleLocator(2.5))
+ax.yaxis.set_ticklabels([])
+ax.tick_params(axis='y',length=0)
+plt.legend()
+
+# Uncomment this line to save the figure.
+#fig.savefig('Plots/Si_1mL_to_1g.svg', transparent=False, bbox_inches="tight")
+
+#%% Ploting XRD data (P 1mL NaOH per gram)
+from matplotlib.ticker import MultipleLocator
+from matplotlib.font_manager import FontProperties
+
+#Values for setting that are used multple places
+off_set = 7500 #used to shift graphs up or down
+lnthikness= 0.5
+ColorPalet = ['#3a3914', '#788015', '#b6d100',]
+
+font = FontProperties()
+font.set_family('sans-serf')
+font.set_name('Arial')
+font.set_size(9)
+
+fig, ax = plt.subplots(figsize=(7.08,3)) #size is in inches
+ax.plot(Cent[0,:], Cent[1,:] + 2*off_set, label='Centroid', 
+        linewidth=lnthikness, color=ColorPalet[0])#Graph 1
+ax.plot(Pax[0,:], Pax[1,:] + 1*off_set, label='P-Axial', 
+        linewidth=lnthikness, color=ColorPalet[1])#Graph 3
+ax.plot(Pco[0,:], Pco[1,:], label='P-Corner', 
+        linewidth=lnthikness, color=ColorPalet[2])#Graph 2
+ax.set_xlabel("Two Theta (degrees)", fontsize=9)
+ax.set_ylabel("Intensity", fontsize=9)
+ax.tick_params(axis='x', labelsize=8)
+ax.tick_params(axis='y', labelsize=8)
+ax.xaxis.set_minor_locator(MultipleLocator(2.5))
+ax.yaxis.set_ticklabels([])
+ax.tick_params(axis='y',length=0)
+plt.legend()
+
+# Uncomment this line to save the figure.
+#fig.savefig('Plots/P_1mL_to_1g.svg', transparent=False, bbox_inches="tight")

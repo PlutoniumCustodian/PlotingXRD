@@ -2,6 +2,9 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MultipleLocator
+from matplotlib.font_manager import FontProperties
+
 #%% Import data
 #This section will read only the diffraction data of the  csv  files in the folder
 # at the path "datapath" into a data frame.
@@ -10,7 +13,6 @@ f_name = (os.listdir(datpath))#list of files in the directory of datpath
 f_howmany = range(len(f_name))
 dataframe_of_frames = []
 
-
 for x in f_howmany:
     temp_df=pd.read_csv(os.path.join(datpath, f_name[x]),skiprows=(range(0, 25)))
     dataframe_of_frames.append(temp_df)
@@ -18,6 +20,7 @@ for x in f_howmany:
 # header=['Angle',' TimePerStep',' Intensity',' ESD'] If header is not
 # correct in "dataframe_of_frame" change data file so that the headers
 # start on row 26
+
 #%% Name imported data
 #Use this section to give your data a useful name manually
 
@@ -39,19 +42,23 @@ Pax = my_data_extract(5)
 Pco = my_data_extract(6)
 Siax = my_data_extract(7)
 Sico = my_data_extract(8)
-#%% Ploting XRD data (Al 1mL NaOH per gram)
-from matplotlib.ticker import MultipleLocator
-from matplotlib.font_manager import FontProperties
 
+#%% Settings for batch of graphs
 #Values for setting that are used multple places
-off_set = 3750 #used to shift graphs up or down
+off_set = 7500 #used to shift graphs up or down
 lnthikness= 0.5
-ColorPalet = ['#0b173a', '#245e99', '#00b4ff']
+ylimits = [ 5, 65]
+xlimits = [-300, 3e4]
+legspot = 'upper right' # Determines where legend is placed
 
 font = FontProperties()
 font.set_family('sans-serf')
 font.set_name('Arial')
 font.set_size(9)
+
+#%% Ploting XRD data (Al 1mL NaOH per gram)
+
+ColorPalet = ['#0b173a', '#245e99', '#00b4ff']
 
 fig, ax = plt.subplots(figsize=(7.08,3)) #size is in inches
 ax.plot(Cent[0,:], Cent[1,:] + 2*off_set, label='Centroid', 
@@ -64,27 +71,19 @@ ax.set_xlabel("Two Theta (degrees)", fontsize=9)
 ax.set_ylabel("Intensity", fontsize=9)
 ax.tick_params(axis='x', labelsize=8)
 ax.tick_params(axis='y', labelsize=8)
+ax.set_xlim(ylimits)
+ax.set_ylim(xlimits)
 ax.xaxis.set_minor_locator(MultipleLocator(2.5))
 ax.yaxis.set_ticklabels([])
 ax.tick_params(axis='y',length=0)
 plt.legend()
 
 # Uncomment this line to save the figure.
-#fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
 #%% Ploting XRD data (Mg 1mL NaOH per gram)
-from matplotlib.ticker import MultipleLocator
-from matplotlib.font_manager import FontProperties
 
-#Values for setting that are used multple places
-off_set = 7500 #used to shift graphs up or down
-lnthikness= 0.5
 ColorPalet = ['#0d3a0c', '#0e8d13', '#00ea00']
-
-font = FontProperties()
-font.set_family('sans-serf')
-font.set_name('Arial')
-font.set_size(9)
 
 fig, ax = plt.subplots(figsize=(7.08,3)) #size is in inches
 ax.plot(Cent[0,:], Cent[1,:] + 2*off_set, label='Centroid', 
@@ -97,27 +96,19 @@ ax.set_xlabel("Two Theta (degrees)", fontsize=9)
 ax.set_ylabel("Intensity", fontsize=9)
 ax.tick_params(axis='x', labelsize=8)
 ax.tick_params(axis='y', labelsize=8)
+ax.set_xlim(ylimits)
+ax.set_ylim(xlimits)
 ax.xaxis.set_minor_locator(MultipleLocator(2.5))
 ax.yaxis.set_ticklabels([])
 ax.tick_params(axis='y',length=0)
 plt.legend()
 
 # Uncomment this line to save the figure.
-#fig.savefig('Plots/Mg_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+fig.savefig('Plots/Mg_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
 #%% Ploting XRD data (Si 1mL NaOH per gram)
-from matplotlib.ticker import MultipleLocator
-from matplotlib.font_manager import FontProperties
 
-#Values for setting that are used multple places
-off_set = 7500 #used to shift graphs up or down
-lnthikness= 0.5
 ColorPalet = ['#3a0b0c', '#961430', '#ff005e']
-
-font = FontProperties()
-font.set_family('sans-serf')
-font.set_name('Arial')
-font.set_size(9)
 
 fig, ax = plt.subplots(figsize=(7.08,3)) #size is in inches
 ax.plot(Cent[0,:], Cent[1,:] + 2*off_set, label='Centroid', 
@@ -128,6 +119,8 @@ ax.plot(Sico[0,:], Sico[1,:], label='Si-Corner',
         linewidth=lnthikness, color=ColorPalet[2])#Graph 2
 ax.set_xlabel("Two Theta (degrees)", fontsize=9)
 ax.set_ylabel("Intensity", fontsize=9)
+ax.set_xlim(ylimits)
+ax.set_ylim(xlimits)
 ax.tick_params(axis='x', labelsize=8)
 ax.tick_params(axis='y', labelsize=8)
 ax.xaxis.set_minor_locator(MultipleLocator(2.5))
@@ -136,21 +129,11 @@ ax.tick_params(axis='y',length=0)
 plt.legend()
 
 # Uncomment this line to save the figure.
-#fig.savefig('Plots/Si_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+fig.savefig('Plots/Si_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
 #%% Ploting XRD data (P 1mL NaOH per gram)
-from matplotlib.ticker import MultipleLocator
-from matplotlib.font_manager import FontProperties
 
-#Values for setting that are used multple places
-off_set = 7500 #used to shift graphs up or down
-lnthikness= 0.5
-ColorPalet = ['#3a3914', '#788015', '#b6d100',]
-
-font = FontProperties()
-font.set_family('sans-serf')
-font.set_name('Arial')
-font.set_size(9)
+ColorPalet = ['#3a3914', '#788015', '#b6d100']
 
 fig, ax = plt.subplots(figsize=(7.08,3)) #size is in inches
 ax.plot(Cent[0,:], Cent[1,:] + 2*off_set, label='Centroid', 
@@ -161,12 +144,14 @@ ax.plot(Pco[0,:], Pco[1,:], label='P-Corner',
         linewidth=lnthikness, color=ColorPalet[2])#Graph 2
 ax.set_xlabel("Two Theta (degrees)", fontsize=9)
 ax.set_ylabel("Intensity", fontsize=9)
+ax.set_xlim(ylimits)
+ax.set_ylim(xlimits)
 ax.tick_params(axis='x', labelsize=8)
 ax.tick_params(axis='y', labelsize=8)
 ax.xaxis.set_minor_locator(MultipleLocator(2.5))
 ax.yaxis.set_ticklabels([])
 ax.tick_params(axis='y',length=0)
-plt.legend()
+plt.legend(loc=legspot)
 
 # Uncomment this line to save the figure.
-#fig.savefig('Plots/P_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+fig.savefig('Plots/P_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")

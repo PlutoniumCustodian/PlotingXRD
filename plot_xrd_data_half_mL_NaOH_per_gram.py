@@ -77,9 +77,10 @@ ax.xaxis.set_minor_locator(MultipleLocator(2.5))
 ax.yaxis.set_ticklabels([])
 ax.tick_params(axis='y',length=0)
 plt.legend()
+plt.legend(loc=legspot)
 
 # Uncomment this line to save the figure.
-fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+# fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
 #%% Ploting XRD data (Mg 1mL NaOH per gram)
 
@@ -102,9 +103,10 @@ ax.xaxis.set_minor_locator(MultipleLocator(2.5))
 ax.yaxis.set_ticklabels([])
 ax.tick_params(axis='y',length=0)
 plt.legend()
+plt.legend(loc=legspot)
 
 # Uncomment this line to save the figure.
-fig.savefig('Plots/Mg_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+#fig.savefig('Plots/Mg_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
 #%% Ploting XRD data (Si 1mL NaOH per gram)
 
@@ -127,9 +129,10 @@ ax.xaxis.set_minor_locator(MultipleLocator(2.5))
 ax.yaxis.set_ticklabels([])
 ax.tick_params(axis='y',length=0)
 plt.legend()
+plt.legend(loc=legspot)
 
 # Uncomment this line to save the figure.
-fig.savefig('Plots/Si_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+#fig.savefig('Plots/Si_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
 #%% Ploting XRD data (P 1mL NaOH per gram)
 
@@ -154,4 +157,4 @@ ax.tick_params(axis='y',length=0)
 plt.legend(loc=legspot)
 
 # Uncomment this line to save the figure.
-fig.savefig('Plots/P_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+#fig.savefig('Plots/P_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")

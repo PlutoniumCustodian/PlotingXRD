@@ -2,6 +2,8 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MultipleLocator
+from matplotlib.font_manager import FontProperties
 #%% Import data
 #This section will read only the diffraction data of the  csv  files in the folder
 # at the path "datapath" into a data frame.
@@ -14,7 +16,10 @@ for x in f_howmany:
     temp_df=pd.read_csv(os.path.join(datpath, f_name[x]),skiprows=(range(0, 25)))
     dataframe_of_frames.append(temp_df)
     # print(os.path.join(datpath, x))
-# header=['Angle',' TimePerStep',' Intensity',' ESD'],
+# header=['Angle',' TimePerStep',' Intensity',' ESD'] If header is not
+# correct in "dataframe_of_frame" change data file so that the headers
+# start on row 26
+
 #%% Name imported data
 #Use this section to give your data a useful name manually
 
@@ -27,24 +32,30 @@ def my_data_extract(fram_index):
     tempMatrix = np.vstack((a,b))
     return  tempMatrix
 #takes extracts the angle and intesity data from one xrd file into a array
-Cent0538mM = my_data_extract(0)
-Cent1000mM = my_data_extract(1)
-Cent0714mM = my_data_extract(2)
+#Use "f_name" to see what files are in what posistion
+Cent0714mM = my_data_extract(0)
+Cent0538mM = my_data_extract(1)
+Cent01000mM = my_data_extract(2)
 Cent0325mM= my_data_extract(3)
 
-#%% Ploting XRD data (Al 1mL NaOH per gram)
-from matplotlib.ticker import MultipleLocator
-from matplotlib.font_manager import FontProperties
-
+#%% Settings for batch of graphs
 #Values for setting that are used multple places
-off_set = 7500 #used to shift graphs up or down
+off_set = 6000 #used to shift graphs up or down
 lnthikness= 0.5
-ColorPalet = ['#17045c', '#73005d', '#b20046', '#d80c1d']
-LNames = ['3.25 M', '5.38 M', '7.14 M', '10.00 M']
+ylimits = [ 5, 65]
+xlimits = [-300, 3.0e4]
+legspot = 'upper right' # Determines where legend is placed
+
 font = FontProperties()
 font.set_family('sans-serf')
 font.set_name('Arial')
 font.set_size(9)
+
+#%% Ploting XRD data (Al 1mL NaOH per gram)
+
+ColorPalet = ['#17045c', '#73005d', '#b20046', '#d80c1d']
+LNames = ['3.25 M', '5.38 M', '7.14 M', '10.00 M'] #Enter the names for the legend
+
 
 fig, ax = plt.subplots(figsize=(7.08,5)) #size is in inches
 ax.plot(Cent0325mM[0,:], Cent0325mM[1,:], label=LNames[0], 
@@ -59,12 +70,15 @@ ax.set_xlabel("Two Theta (degrees)", fontsize=9)
 ax.set_ylabel("Intensity", fontsize=9)
 ax.tick_params(axis='x', labelsize=8)
 ax.tick_params(axis='y', labelsize=8)
+ax.set_xlim(ylimits)
+ax.set_ylim(xlimits)
 ax.xaxis.set_minor_locator(MultipleLocator(2.5))
-ax.yaxis.set_ticklabels([])
-ax.tick_params(axis='y',length=0)
+ax.yaxis.set_ticklabels([]) # Removes numbers on y-axis
+ax.tick_params(axis='y',length=0) # Removes y-axis tick marks 
 plt.legend()
+plt.legend(loc=legspot)
 
 # Uncomment this line to save the figure.
-#fig.savefig('Plots/AL_1mL_to_1g.svg', transparent=False, bbox_inches="tight")
+fig.savefig('Plots/Centroid_at_dif_NaOH_levels.svg', transparent=False, bbox_inches="tight")
 
 

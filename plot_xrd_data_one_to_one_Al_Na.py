@@ -8,7 +8,8 @@ from matplotlib.font_manager import FontProperties
 #%% Import data
 #This section will read only the diffraction data of the  csv  files in the folder
 # at the path "datapath" into a data frame.
-datpath = 'Files_organized_for_plots/PC' # directory where data is stored relative to py script location
+datpath = 'Files_organized_for_plots/Na_to_Al_1' # directory where data is 
+#stored relative to py script location
 f_name = (os.listdir(datpath))#list of files in the directory of datpath
 f_howmany = range(len(f_name))
 dataframe_of_frames = []

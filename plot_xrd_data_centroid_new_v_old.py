@@ -74,6 +74,6 @@ plt.legend(loc=legspot)
 print(ax.get_ylim())
 
 # Uncomment this line to save the figure.
-fig.savefig('Plots/Old_Vs_new.svg', transparent=False, bbox_inches="tight")
+# fig.savefig('Plots/Old_Vs_new.svg', transparent=False, bbox_inches="tight")
 
 #

@@ -2,6 +2,9 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MultipleLocator
+from matplotlib.font_manager import FontProperties
+
 #%% Import data
 #This section will read only the diffraction data of the  csv  files in the folder
 # at the path "datapath" into a data frame.
@@ -37,8 +40,7 @@ Pco = my_data_extract(6)
 Siax = my_data_extract(7)
 Sico = my_data_extract(8)
 #%% Ploting XRD data (Al 1mL NaOH per gram)
-from matplotlib.ticker import MultipleLocator
-from matplotlib.font_manager import FontProperties
+
 
 #Values for setting that are used multple places
 off_set = 7500 #used to shift graphs up or down

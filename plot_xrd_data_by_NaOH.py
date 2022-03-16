@@ -189,4 +189,13 @@ xrd_quad_plot(Al_axial, ['A','B','C','D'], ColorPalet_1, test)
 # Uncomment this line to save the figure.
 # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
+#%% developeing
 
+def concentration_lable(name_index):
+    molar_tag = f_name[name_index].find('M_',25)
+    molar_value=(f_name[name_index][molar_tag-4:molar_tag-2]) + '.'\
+        + (f_name[name_index][molar_tag-2:molar_tag]) + ' M'
+    # print(test)
+    if molar_value[0]=='0': molar_value = molar_value.replace('0', '',1)
+    return molar_value
+print(concentration_lable(0))

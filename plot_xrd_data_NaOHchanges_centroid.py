@@ -75,11 +75,9 @@ ax.set_ylim(xlimits)
 ax.xaxis.set_minor_locator(MultipleLocator(2.5))
 ax.yaxis.set_ticklabels([]) # Removes numbers on y-axis
 ax.tick_params(axis='y',length=0) # Removes y-axis tick marks 
-#Revers order of legend lables
+# Reverses order of legend
 handles, labels = ax.get_legend_handles_labels()
 ax.legend(handles[::-1], labels[::-1])
-plt.legend()
-plt.legend(loc=legspot)
 
 # Uncomment this line to save the figure.
 # fig.savefig('Plots/Centroid_at_dif_NaOH_levels.svg', transparent=False, bbox_inches="tight")

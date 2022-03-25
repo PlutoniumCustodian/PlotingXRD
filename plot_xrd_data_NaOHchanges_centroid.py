@@ -64,7 +64,7 @@ ax.plot(Cent0538mM[0,:], Cent0538mM[1,:] + 1*off_set, label=LNames[1],
         linewidth=lnthikness, color=ColorPalet[1])#series 2
 ax.plot(Cent0714mM[0,:], Cent0714mM[1,:] + 2*off_set, label=LNames[2], 
         linewidth=lnthikness, color=ColorPalet[2])#series 3 
-ax.plot(Cent0325mM[0,:], Cent0325mM[1,:] + 3*off_set, label=LNames[3],
+ax.plot(Cent01000mM[0,:], Cent01000mM[1,:] + 3*off_set, label=LNames[3],
         linewidth=lnthikness, color=ColorPalet[3])#series 4
 ax.set_xlabel("Two Theta (degrees)", fontsize=9)
 ax.set_ylabel("Intensity", fontsize=9)

@@ -34,7 +34,7 @@ Cent_label = []
 #Import data for unactivated PC
 #This section will read only the diffraction data of the  csv  files in the folder
 # at the path "datapath" into a data frame.
-datpath = 'Files_organized_for_plots/PC' # directory where data is 
+datpath = 'Files_organized_for_plots/Centroid_changing_NaOH_V2' # directory where data is 
 #stored relative to py script location
 f_name = (os.listdir(datpath))#list of files in the directory of datpath
 f_howmany = range(len(f_name))
@@ -77,44 +77,43 @@ def concentration_lable(name_index):
 
 # extracts the angle and intesity data from one xrd file into a array
 
-
-Centroid.append(my_data_extract(2))
-
-x = 'Unactivated'
-
-Cent_label.append(x)
+for n in f_howmany:
+    Centroid.append(my_data_extract(n))
+    Cent_label.append(concentration_lable(n))
+    
+Cent_label[0] = 'Unactivated'
 
 
 # Import data for centroid concentrations
 
-#This section will read only the diffraction data of the  csv  files in the folder
-# at the path "datapath" into a data frame.
-datpath = 'Files_organized_for_plots/Centroid_changing_NaOH' # directory where data is 
-#stored relative to py script location
-f_name = (os.listdir(datpath))#list of files in the directory of datpath
-f_howmany = range(len(f_name))
-dataframe_of_frames = []
+# #This section will read only the diffraction data of the  csv  files in the folder
+# # at the path "datapath" into a data frame.
+# datpath = 'Files_organized_for_plots/Centroid_changing_NaOH_V2' # directory where data is 
+# #stored relative to py script location
+# f_name = (os.listdir(datpath))#list of files in the directory of datpath
+# f_howmany = range(len(f_name))
+# dataframe_of_frames = []
 
-for x in f_howmany:
-    temp_df=pd.read_csv(os.path.join(datpath, f_name[x]),skiprows=(range(0, 25)))
-    dataframe_of_frames.append(temp_df)
-    # print(os.path.join(datpath, x))
-# header=['Angle',' TimePerStep',' Intensity',' ESD'] If header is not
-# correct in "dataframe_of_frame" change data file so that the headers
-# start on row 26
+# for x in f_howmany:
+#     temp_df=pd.read_csv(os.path.join(datpath, f_name[x]),skiprows=(range(0, 25)))
+#     dataframe_of_frames.append(temp_df)
+#     # print(os.path.join(datpath, x))
+# # header=['Angle',' TimePerStep',' Intensity',' ESD'] If header is not
+# # correct in "dataframe_of_frame" change data file so that the headers
+# # start on row 26
 
-for n in f_howmany:
-    Centroid.append(my_data_extract(n))
-    Cent_label.append(concentration_lable(n))
+# for n in f_howmany:
+#     Centroid.append(my_data_extract(n))
+#     Cent_label.append(concentration_lable(n))
 
 
 
 #%% Settings for batch of graphs
 #Values for setting that are used multple places
-off_set = 6500 #used to shift graphs up or down
+off_set = 7000 #used to shift graphs up or down
 lnthikness= 0.5
-ylimits = [ 5, 65]
-xlimits = [-300, 3.5e4]
+ylimits = [ 5, 90]
+xlimits = [-300, 4.0e4]
 legspot = 'upper right' # Determines where legend is placed
 
 font = FontProperties()
@@ -122,13 +121,13 @@ font.set_family('sans-serf')
 font.set_name('Arial')
 font.set_size(9)
 
-#%% Ploting Al-Axial
-test= 'Test_plot'
-ColorPalet_1 = ['#250316', '#3f0a27', '#5b0d3a', '#790f4d', '#991062', 
-                '#ba0e77', '#dc098c', '#ff00a2',]
+#%% Set up plotting function
+# test= 'Test_plot'
+ColorPalet_1 = ['#252089', '#6a3a9f', '#a05ab6', '#d17ecd', '#ffa5e6', 
+                '#e27cb2', '#c1557f', '#9e2f4f' ,'#770224']
 def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
     num_of_scans = range(len(np.array(xrd_data)))
-    fig, ax = plt.subplots(figsize=(7.08,3)) #size is in inches    
+    fig, ax = plt.subplots(figsize=(7.08,5)) #size is in inches    
     for n in num_of_scans:
         ax.plot(xrd_data[n][0,:], xrd_data[n][1,:] + n*off_set, 
         linewidth=lnthikness, color=ColorPalet[n], label=plot_names[n])
@@ -143,20 +142,19 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
     ax.yaxis.set_ticklabels([])
     ax.tick_params(axis='y',length=0)
     plt.title(plt_title)
-    
+    # ax.legend()
     #Revers order of legend lables
-    # handles, labels = ax.get_legend_handles_labels()
-    # ax.legend(handles[::-1], labels[::-1])
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(handles[::-1], labels[::-1])
 
     svg_name_path = 'Plots/' + svg_file_name + '.svg'
     # Uncomment this line to save the figure.
-    # fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
+    fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
     return fig
 
 #%% Centroid plots
 
 xrd_quad_plot(Centroid, Cent_label , ColorPalet_1,\
               'Centroid_at_dif_NaOH_levelsV2','Centroid')
-# Uncomment this line to save the figure.
-# fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+
 

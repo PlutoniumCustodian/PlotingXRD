@@ -217,7 +217,7 @@ font.set_family('sans-serf')
 font.set_name('Arial')
 font.set_size(9)
 
-#%% Ploting Al-Axial
+#%% Ploting Function
 test= 'Test_plot'
 ColorPalet_1 = ['#17045c', '#73005d', '#b20046', '#d80c1d']
 def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
@@ -227,7 +227,7 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
         ax.plot(xrd_data[n][0,:], xrd_data[n][1,:] + n*off_set, 
         linewidth=lnthikness, color=ColorPalet[n], label=plot_names[n])
 
-    ax.set_xlabel("Two Theta (degrees)", fontsize=9)
+    ax.set_xlabel("2θ (degrees)", fontsize=9)
     ax.set_ylabel("Intensity", fontsize=9)
     ax.tick_params(axis='x', labelsize=8)
     ax.tick_params(axis='y', labelsize=8)
@@ -306,3 +306,31 @@ xrd_quad_plot(Si_corner , Si_c_label , ColorPalet_1, 'Si_corner_concentration',\
               'Si-Corner')
 # Uncomment this line to save the figure.
 # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+
+#%% single Al-Corner graph
+lnthikness= 0.5
+xlimits = [ 5, 65]
+ylimits = [0, 1.2e4]
+legspot = 'upper right' # Determines where legend is placed
+
+font = FontProperties()
+font.set_family('sans-serf')
+font.set_name('Arial')
+font.set_size(9)
+n=2
+
+fig, ax = plt.subplots(figsize=(8.08,3)) #size is in inches
+
+ax.plot(Al_corner[n][0,:], Al_corner[n][1,:], 
+    linewidth=lnthikness, color='#176100')
+ax.set_xlabel("Two Theta (degrees)", fontsize=9)
+ax.set_ylabel("Intensity (counts)", fontsize=9)
+ax.tick_params(axis='x', labelsize=8)
+ax.tick_params(axis='y', labelsize=8)
+ax.set_xlim(xlimits)
+ax.set_ylim(ylimits)
+ax.xaxis.set_minor_locator(MultipleLocator(2.5))
+# ax.yaxis.set_ticklabels([])
+ax.tick_params(axis='y',length=0)
+#plt.title(plt_title)
+# fig.savefig('Plots/AL_for_IO_poster.svg', transparent=False, bbox_inches="tight")

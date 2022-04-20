@@ -43,23 +43,28 @@ Sico = my_data_extract(8)
 
 
 #Values for setting that are used multple places
-off_set = 7500 #used to shift graphs up or down
+off_set = 8800 #used to shift graphs up or down
 lnthikness= 0.5
 ColorPalet = ['#0b173a', '#245e99', '#00b4ff']
+ylimits = [ 5, 65]
+xlimits = [-300, 3e4]
 
 font = FontProperties()
 font.set_family('sans-serf')
 font.set_name('Arial')
 font.set_size(9)
+x_lable = '2θ (degrees)'
 
-fig, ax = plt.subplots(figsize=(7.08,3)) #size is in inches
+fig, ax = plt.subplots(figsize=(7.08,3.5)) #size is in inches
 ax.plot(Cent[0,:], Cent[1,:] + 2*off_set, label='Centroid', 
         linewidth=lnthikness, color=ColorPalet[0])#Graph 1
 ax.plot(Alax[0,:], Alax[1,:] + 1*off_set, label='Al-Axial', 
         linewidth=lnthikness, color=ColorPalet[1])#Graph 3
 ax.plot(Alco[0,:], Alco[1,:], label='Al-Corner', 
         linewidth=lnthikness, color=ColorPalet[2])#Graph 2
-ax.set_xlabel("Two Theta (degrees)", fontsize=9)
+ax.set_xlim(ylimits)
+ax.set_ylim(xlimits)
+ax.set_xlabel(x_lable, fontsize=9)
 ax.set_ylabel("Intensity", fontsize=9)
 ax.tick_params(axis='x', labelsize=8)
 ax.tick_params(axis='y', labelsize=8)
@@ -69,15 +74,11 @@ ax.tick_params(axis='y',length=0)
 plt.legend()
 
 # Uncomment this line to save the figure.
-#fig.savefig('Plots/AL_1mL_to_1g.svg', transparent=False, bbox_inches="tight")
+fig.savefig('Plots/AL_1mL_to_1g_2.svg', transparent=False, bbox_inches="tight")
 
 #%% Ploting XRD data (Mg 1mL NaOH per gram)
-from matplotlib.ticker import MultipleLocator
-from matplotlib.font_manager import FontProperties
 
-#Values for setting that are used multple places
-off_set = 7500 #used to shift graphs up or down
-lnthikness= 0.5
+
 ColorPalet = ['#0d3a0c', '#0e8d13', '#00ea00']
 
 font = FontProperties()
@@ -85,14 +86,16 @@ font.set_family('sans-serf')
 font.set_name('Arial')
 font.set_size(9)
 
-fig, ax = plt.subplots(figsize=(7.08,3)) #size is in inches
+fig, ax = plt.subplots(figsize=(7.08,3.5)) #size is in inches
 ax.plot(Cent[0,:], Cent[1,:] + 2*off_set, label='Centroid', 
         linewidth=lnthikness, color=ColorPalet[0])#Graph 1
 ax.plot(Mgax[0,:], Mgax[1,:] + 1*off_set, label='Mg-Axial', 
         linewidth=lnthikness, color=ColorPalet[1])#Graph 3
 ax.plot(Mgco[0,:], Mgco[1,:], label='Mg-Corner', 
         linewidth=lnthikness, color=ColorPalet[2])#Graph 2
-ax.set_xlabel("Two Theta (degrees)", fontsize=9)
+ax.set_xlim(ylimits)
+ax.set_ylim(xlimits)
+ax.set_xlabel(x_lable, fontsize=9)
 ax.set_ylabel("Intensity", fontsize=9)
 ax.tick_params(axis='x', labelsize=8)
 ax.tick_params(axis='y', labelsize=8)
@@ -102,15 +105,10 @@ ax.tick_params(axis='y',length=0)
 plt.legend()
 
 # Uncomment this line to save the figure.
-#fig.savefig('Plots/Mg_1mL_to_1g.svg', transparent=False, bbox_inches="tight")
+fig.savefig('Plots/Mg_1mL_to_1g_2.svg', transparent=False, bbox_inches="tight")
 
 #%% Ploting XRD data (Si 1mL NaOH per gram)
-from matplotlib.ticker import MultipleLocator
-from matplotlib.font_manager import FontProperties
 
-#Values for setting that are used multple places
-off_set = 7500 #used to shift graphs up or down
-lnthikness= 0.5
 ColorPalet = ['#3a0b0c', '#961430', '#ff005e']
 
 font = FontProperties()
@@ -118,14 +116,16 @@ font.set_family('sans-serf')
 font.set_name('Arial')
 font.set_size(9)
 
-fig, ax = plt.subplots(figsize=(7.08,3)) #size is in inches
+fig, ax = plt.subplots(figsize=(7.08,3.5)) #size is in inches
 ax.plot(Cent[0,:], Cent[1,:] + 2*off_set, label='Centroid', 
         linewidth=lnthikness, color=ColorPalet[0])#Graph 1
 ax.plot(Siax[0,:], Siax[1,:] + 1*off_set, label='Si-Axial', 
         linewidth=lnthikness, color=ColorPalet[1])#Graph 3
 ax.plot(Sico[0,:], Sico[1,:], label='Si-Corner', 
         linewidth=lnthikness, color=ColorPalet[2])#Graph 2
-ax.set_xlabel("Two Theta (degrees)", fontsize=9)
+ax.set_xlim(ylimits)
+ax.set_ylim(xlimits)
+ax.set_xlabel(x_lable, fontsize=9)
 ax.set_ylabel("Intensity", fontsize=9)
 ax.tick_params(axis='x', labelsize=8)
 ax.tick_params(axis='y', labelsize=8)
@@ -135,15 +135,12 @@ ax.tick_params(axis='y',length=0)
 plt.legend()
 
 # Uncomment this line to save the figure.
-#fig.savefig('Plots/Si_1mL_to_1g.svg', transparent=False, bbox_inches="tight")
+fig.savefig('Plots/Si_1mL_to_1g_2.svg', transparent=False, bbox_inches="tight")
 
 #%% Ploting XRD data (P 1mL NaOH per gram)
-from matplotlib.ticker import MultipleLocator
-from matplotlib.font_manager import FontProperties
 
-#Values for setting that are used multple places
-off_set = 7500 #used to shift graphs up or down
-lnthikness= 0.5
+# ylimits = [ 5, 65]
+# xlimits = [-300, 3.5e4]
 ColorPalet = ['#3a3914', '#788015', '#b6d100',]
 
 font = FontProperties()
@@ -151,14 +148,16 @@ font.set_family('sans-serf')
 font.set_name('Arial')
 font.set_size(9)
 
-fig, ax = plt.subplots(figsize=(7.08,3)) #size is in inches
+fig, ax = plt.subplots(figsize=(7.08,3.5)) #size is in inches
 ax.plot(Cent[0,:], Cent[1,:] + 2*off_set, label='Centroid', 
         linewidth=lnthikness, color=ColorPalet[0])#Graph 1
 ax.plot(Pax[0,:], Pax[1,:] + 1*off_set, label='P-Axial', 
         linewidth=lnthikness, color=ColorPalet[1])#Graph 3
 ax.plot(Pco[0,:], Pco[1,:], label='P-Corner', 
         linewidth=lnthikness, color=ColorPalet[2])#Graph 2
-ax.set_xlabel("Two Theta (degrees)", fontsize=9)
+ax.set_xlim(ylimits)
+ax.set_ylim(xlimits)
+ax.set_xlabel(x_lable, fontsize=9)
 ax.set_ylabel("Intensity", fontsize=9)
 ax.tick_params(axis='x', labelsize=8)
 ax.tick_params(axis='y', labelsize=8)
@@ -168,4 +167,4 @@ ax.tick_params(axis='y',length=0)
 plt.legend()
 
 # Uncomment this line to save the figure.
-#fig.savefig('Plots/P_1mL_to_1g.svg', transparent=False, bbox_inches="tight")
+fig.savefig('Plots/P_1mL_to_1g_2.svg', transparent=False, bbox_inches="tight")

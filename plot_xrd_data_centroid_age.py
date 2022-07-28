@@ -51,10 +51,11 @@ for n in f_howmany:
 Cent_label.append('24 hours')
 Cent_label.append('7 days')
 Cent_label.append('14 days')
+Cent_label.append('28 days')
 
 #%% Settings for batch of graphs
 #Values for setting that are used multple places
-off_set = 6500 #used to shift graphs up or down
+off_set = 500 #3500 #used to shift graphs up or down
 lnthikness= 0.5
 ylimits = [ 5, 65]
 xlimits = [-300, 4.0e4]
@@ -67,11 +68,11 @@ font.set_size(9)
 
 #%% Set up plotting function
 # test= 'Test_plot'
-ColorPalet_1 = ['#252089', '#6a3a9f', '#a05ab6', '#d17ecd', '#ffa5e6', 
+ColorPalet_1 = ['#ff9d00', '#e63940', '#9a005d', '#1f005c', '#ffa5e6', 
                 '#e27cb2', '#c1557f', '#9e2f4f' ,'#770224']
 def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
     num_of_scans = range(len(np.array(xrd_data)))
-    fig, ax = plt.subplots(figsize=(7.08,4)) #size is in inches    
+    fig, ax = plt.subplots(figsize=(14,8)) #size is in inches    
     for n in num_of_scans:
         ax.plot(xrd_data[n][0,:], xrd_data[n][1,:] + n*off_set, 
         linewidth=lnthikness, color=ColorPalet[n], label=plot_names[n])
@@ -93,12 +94,12 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
 
     svg_name_path = 'Plots/' + svg_file_name + '.svg'
     # Uncomment this line to save the figure.
-    fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
+    # fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
     return fig
 
 #%% Centroid plots
 
 xrd_quad_plot(Centroid, Cent_label , ColorPalet_1,\
-              'Centroid_at_different_ageV2','Centroid')
+              'Centroid_at_different_ageV4','Centroid')
 
 

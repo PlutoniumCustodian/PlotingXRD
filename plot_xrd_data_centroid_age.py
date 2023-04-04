@@ -55,7 +55,7 @@ Cent_label.append('28 days')
 
 #%% Settings for batch of graphs
 #Values for setting that are used multple places
-off_set = 4500 #used to shift graphs up or down
+off_set = 0 #4500 #used to shift graphs up or down
 lnthikness= .5
 ylimits = [ 5, 65]
 xlimits = [-300, 4.0e4]
@@ -100,6 +100,6 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
 #%% Centroid plots
 
 xrd_quad_plot(Centroid, Cent_label , ColorPalet_1,\
-              'Centroid_at_different_age_CompsV5','Centroid')
+              'Centroid_at_different_age_Comps_no_offset','Centroid')
 
 

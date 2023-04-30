@@ -98,7 +98,7 @@ Si_corner.append(my_data_extract(10))
 off_set = 6500 #used to shift graphs up or down
 lnthikness= 0.5
 ylimits = [ 5, 65]
-xlimits = [-300, 1.75e4]
+xlimits = [-300, 2.5e4]
 legspot = 'upper right' # Determines where legend is placed
 
 font = FontProperties()

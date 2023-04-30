@@ -104,7 +104,7 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
 
     svg_name_path = 'Plots/28day_to_28day_mirror/' + svg_file_name + '.svg'
     # Uncomment this line to save the figure.
-    fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
+    # fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
     return fig
 
 

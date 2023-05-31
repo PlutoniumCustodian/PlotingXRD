@@ -155,6 +155,6 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
 #%% Centroid plots
 
 xrd_quad_plot(Centroid, Cent_label , ColorPalet_1,\
-              'Centroid_at_dif_NaOH_levelsV2','Centroid')
+              'Centroid_at_dif_NaOH_levelsV3','Centroid')
 
 

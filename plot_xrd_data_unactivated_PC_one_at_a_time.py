@@ -54,7 +54,7 @@ RGPC_label.append('P-Axial')
 RGPC_label.append('P-Corner')
 RGPC_label.append('Si-Axial')
 RGPC_label.append('Si-Corener')
-
+RGPC_label.append('PO4_free')
 #%% Settings for batch of graphs
 #Values for setting that are used multple places
 off_set = 7500 #used to shift graphs up or down
@@ -90,11 +90,15 @@ def xrd_single_plot(xrd_data, plot_names, svg_file_name, plt_title,n):
     # ax.legend(handles[::-1], labels[::-1])
     svg_name_path = 'Plots/PC/' + svg_file_name[n] + '.svg'
     # Uncomment this line to save the figure.
-    fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
+    # fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
     return fig
 
 #%% Ploting XRD data
 num_of_scans = range(len(np.array(RGPC)))    
 for n in num_of_scans:
     xrd_single_plot(RGPC, RGPC_label, RGPC_label, RGPC_label, n)
+    
+#%% Manual plot just one
 
+n=9
+xrd_single_plot(RGPC, RGPC_label, RGPC_label, RGPC_label, n)

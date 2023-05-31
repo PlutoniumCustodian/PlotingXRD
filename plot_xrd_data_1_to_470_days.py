@@ -11,15 +11,12 @@ from matplotlib.font_manager import FontProperties
 
 Al_axial = []
 Al_corner = []
-Centroid = []
+# Centroid = []
 Mg_axial = []
 Mg_corner = []
-P_axial = []
-P_corner = []
-Si_axial = []
-Si_corner = []
 
-Data_lable = ['1 day', '28 days']
+
+Data_lable = ['1 day', '28 days', '470 days']
 
 #%% Import and organize XRD data 
 
@@ -61,13 +58,10 @@ for x in f_howmany:
 
 Al_axial.append(my_data_extract(0))
 Al_corner.append(my_data_extract(1))
-Centroid.append(my_data_extract(2))
+# Centroid.append(my_data_extract(2))
 Mg_axial.append(my_data_extract(3))
 Mg_corner.append(my_data_extract(4))
-P_axial.append(my_data_extract(5))
-P_corner.append(my_data_extract(6))
-Si_axial.append(my_data_extract(7))
-Si_corner.append(my_data_extract(8))
+
 
 # Import data 1mL NaOH to 1g PC aged 28 day
 #This section will read only the diffraction data of the  csv  files in the folder
@@ -85,20 +79,37 @@ for x in f_howmany:
 
 Al_axial.append(my_data_extract(0))
 Al_corner.append(my_data_extract(1))
-Centroid.append(my_data_extract(2))
+# Centroid.append(my_data_extract(2))
 Mg_axial.append(my_data_extract(3))
 Mg_corner.append(my_data_extract(4))
-P_axial.append(my_data_extract(7))
-P_corner.append(my_data_extract(8))
-Si_axial.append(my_data_extract(9))
-Si_corner.append(my_data_extract(10))
+
+# Import data 1mL NaOH to 1g PC aged 470 day
+#This section will read only the diffraction data of the  csv  files in the folder
+# at the path "datapath" into a data frame.
+datpath = 'Files_organized_for_plots/470_day' # directory where data is stored relative to py script location
+f_name = (os.listdir(datpath))#list of files in the directory of datpath
+print('List of 470-day files', pd.DataFrame(f_name))
+print('Check that index matches with data sotored to named array')
+f_howmany = range(len(f_name))
+dataframe_of_frames = []
+
+for x in f_howmany:
+    temp_df=pd.read_csv(os.path.join(datpath, f_name[x]),skiprows=(range(0, 25)))
+    dataframe_of_frames.append(temp_df)
+
+Al_axial.append(my_data_extract(0))
+Al_corner.append(my_data_extract(3))
+# Centroid.append(my_data_extract(2))
+Mg_axial.append(my_data_extract(1))
+Mg_corner.append(my_data_extract(2))
+
 
 #%% Settings for batch of graphs
 #Values for setting that are used multple places
-off_set = 6500 #used to shift graphs up or down
-lnthikness= 0.5
-ylimits = [ 5, 65]
-xlimits = [-300, 2.5e4]
+off_set = 3000 #used to shift graphs up or down
+lnthikness= 1
+xlimits = [ 5, 65]
+ylimits = [-300, 2.8e4]
 legspot = 'upper right' # Determines where legend is placed
 
 font = FontProperties()
@@ -108,7 +119,7 @@ font.set_size(9)
 
 #%% Ploting Function
 test= 'Test_plot'
-ColorPalet_1 = ['#17045c', '#73005d', '#b20046', '#d80c1d']
+ColorPalet_1 = ["#4db758","#145092","#000000"]
 def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
     num_of_scans = range(len(np.array(xrd_data)))
     fig, ax = plt.subplots(figsize=(7.08,3)) #size is in inches    
@@ -120,8 +131,8 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
     ax.set_ylabel("Intensity", fontsize=9)
     ax.tick_params(axis='x', labelsize=8)
     ax.tick_params(axis='y', labelsize=8)
-    ax.set_xlim(ylimits)
-    ax.set_ylim(xlimits)
+    ax.set_xlim(xlimits)
+    # ax.set_ylim(ylimits)
     ax.xaxis.set_minor_locator(MultipleLocator(2.5))
     ax.yaxis.set_ticklabels([])
     ax.tick_params(axis='y',length=0)
@@ -131,8 +142,8 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
     handles, labels = ax.get_legend_handles_labels()
     ax.legend(handles[::-1], labels[::-1])
 
-    svg_name_path = 'Plots/' + svg_file_name + '.svg'
-    # Uncomment this line to save the figure.
+    svg_name_path = 'Plots/1_to_740days/' + svg_file_name + '.svg'
+    # Uncomment next line to save the figure.
     # fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
     return fig
 
@@ -141,83 +152,83 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
 # order of inputs for xrd_quad_plot
 # xrd_data, plot_names, ColorPalet, svg_file_name, plt_title
 xrd_quad_plot(Al_axial, Data_lable , ColorPalet_1,\
-              'Al_axial_1to28day','Al-axial')
+              'Al_axial_1to470day_no-offset','Al-axial')
 # Uncomment this line to save the figure.
 # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
 #%% Al-corner plot
 
 xrd_quad_plot(Al_corner , Data_lable , ColorPalet_1,\
-              'Al_corner_1to28day', 'Al-Corner')
+              'Al_corner_1to470day_no-offset', 'Al-Corner')
 # Uncomment this line to save the figure.
 # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
 #%% Mg-Axial
 
-xrd_quad_plot(Mg_axial , Data_lable , ColorPalet_1, 'Mg_Axial_1to28day',\
+xrd_quad_plot(Mg_axial , Data_lable , ColorPalet_1, 'Mg_Axial_1to470day_no-offset',\
               'Mg-Axial')
 # Uncomment this line to save the figure.
 # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
 #%% Mg-Corner plot
 
-xrd_quad_plot(Mg_corner , Data_lable , ColorPalet_1, 'Mg_corner_1to28day',\
+xrd_quad_plot(Mg_corner , Data_lable , ColorPalet_1, 'Mg_corner_1to470day_no-offset',\
               'Mg-Corner')
 # Uncomment this line to save the figure.
 # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
-#%% P-Axial
+# #%% P-Axial
 
-xrd_quad_plot(P_axial , Data_lable , ColorPalet_1, 'P_Axial_1to28day',\
-              'P-axial')
-# Uncomment this line to save the figure.
-# fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+# xrd_quad_plot(P_axial , Data_lable , ColorPalet_1, 'P_Axial_1to28day',\
+#               'P-axial')
+# # Uncomment this line to save the figure.
+# # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
-#%% P-Corner plot
+# #%% P-Corner plot
 
-xrd_quad_plot(P_corner , Data_lable , ColorPalet_1, 'P_corner_1to28day'\
-              , 'P-Corner')
-# Uncomment this line to save the figure.
-# fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+# xrd_quad_plot(P_corner , Data_lable , ColorPalet_1, 'P_corner_1to28day'\
+#               , 'P-Corner')
+# # Uncomment this line to save the figure.
+# # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
-#%% Si-Axial
+# #%% Si-Axial
 
-xrd_quad_plot(Si_axial , Data_lable , ColorPalet_1, 'Si_Axial_1to28day'\
-              , 'Si-axial')
-# Uncomment this line to save the figure.
-# fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+# xrd_quad_plot(Si_axial , Data_lable , ColorPalet_1, 'Si_Axial_1to28day'\
+#               , 'Si-axial')
+# # Uncomment this line to save the figure.
+# # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
-#%% Si-Corner plot
+# #%% Si-Corner plot
 
-xrd_quad_plot(Si_corner , Data_lable , ColorPalet_1, 'Si_corner_1to28day',\
-               'Si-Corner')
-# Uncomment this line to save the figure.
-# fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+# xrd_quad_plot(Si_corner , Data_lable , ColorPalet_1, 'Si_corner_1to28day',\
+#                'Si-Corner')
+# # Uncomment this line to save the figure.
+# # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
-# #%% single Al-Corner graph
-# lnthikness= 0.5
-# xlimits = [ 5, 65]
-# ylimits = [0, 1.2e4]
-# legspot = 'upper right' # Determines where legend is placed
+# # #%% single Al-Corner graph
+# # lnthikness= 0.5
+# # xlimits = [ 5, 65]
+# # ylimits = [0, 1.2e4]
+# # legspot = 'upper right' # Determines where legend is placed
 
-# font = FontProperties()
-# font.set_family('sans-serf')
-# font.set_name('Arial')
-# font.set_size(9)
-# n=2
+# # font = FontProperties()
+# # font.set_family('sans-serf')
+# # font.set_name('Arial')
+# # font.set_size(9)
+# # n=2
 
-# fig, ax = plt.subplots(figsize=(8.08,3)) #size is in inches
+# # fig, ax = plt.subplots(figsize=(8.08,3)) #size is in inches
 
-# ax.plot(Al_corner[n][0,:], Al_corner[n][1,:], 
-#     linewidth=lnthikness, color='#176100')
-# ax.set_xlabel("Two Theta (degrees)", fontsize=9)
-# ax.set_ylabel("Intensity (counts)", fontsize=9)
-# ax.tick_params(axis='x', labelsize=8)
-# ax.tick_params(axis='y', labelsize=8)
-# ax.set_xlim(xlimits)
-# ax.set_ylim(ylimits)
-# ax.xaxis.set_minor_locator(MultipleLocator(2.5))
-# # ax.yaxis.set_ticklabels([])
-# ax.tick_params(axis='y',length=0)
-# #plt.title(plt_title)
-# # fig.savefig('Plots/AL_for_IO_poster.svg', transparent=False, bbox_inches="tight")
+# # ax.plot(Al_corner[n][0,:], Al_corner[n][1,:], 
+# #     linewidth=lnthikness, color='#176100')
+# # ax.set_xlabel("Two Theta (degrees)", fontsize=9)
+# # ax.set_ylabel("Intensity (counts)", fontsize=9)
+# # ax.tick_params(axis='x', labelsize=8)
+# # ax.tick_params(axis='y', labelsize=8)
+# # ax.set_xlim(xlimits)
+# # ax.set_ylim(ylimits)
+# # ax.xaxis.set_minor_locator(MultipleLocator(2.5))
+# # # ax.yaxis.set_ticklabels([])
+# # ax.tick_params(axis='y',length=0)
+# # #plt.title(plt_title)
+# # # fig.savefig('Plots/AL_for_IO_poster.svg', transparent=False, bbox_inches="tight")

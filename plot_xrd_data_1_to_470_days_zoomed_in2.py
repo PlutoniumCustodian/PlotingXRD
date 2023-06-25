@@ -14,6 +14,7 @@ Al_corner = []
 # Centroid = []
 Mg_axial = []
 Mg_corner = []
+P_free = []
 
 
 Data_lable = ['1 day', '28 days', '470 days']
@@ -61,6 +62,7 @@ Al_corner.append(my_data_extract(1))
 # Centroid.append(my_data_extract(2))
 Mg_axial.append(my_data_extract(3))
 Mg_corner.append(my_data_extract(4))
+P_free.append(my_data_extract(9))
 
 
 # Import data 1mL NaOH to 1g PC aged 28 day
@@ -82,6 +84,7 @@ Al_corner.append(my_data_extract(1))
 # Centroid.append(my_data_extract(2))
 Mg_axial.append(my_data_extract(3))
 Mg_corner.append(my_data_extract(4))
+P_free.append(my_data_extract(6))
 
 # Import data 1mL NaOH to 1g PC aged 470 day
 #This section will read only the diffraction data of the  csv  files in the folder
@@ -103,13 +106,32 @@ Al_corner.append(my_data_extract(3))
 Mg_axial.append(my_data_extract(1))
 Mg_corner.append(my_data_extract(2))
 
+#%% print maximum value for each scan
+def maxcount(xrd_data):
+    for n in range(len(xrd_data)):
+        print(Data_lable[n], np.max(Al_axial[n]))
+
+print('Al-corner')      
+maxcount(Al_corner)
+
+print('Al-axial')      
+maxcount(Al_axial)
+
+print('Mg-axial')      
+maxcount(Mg_axial)
+
+print('Mg-corner')      
+maxcount(Mg_corner)
+
+print('PO4-Free')      
+maxcount(P_free)
 
 #%% Settings for batch of graphs
 #Values for setting that are used multple places
-off_set = 6000 #used to shift graphs up or down
+off_set = 00 #used to shift graphs up or down
 lnthikness= 1
-xlimits = [ 5, 65]
-ylimits = [-300, 2.8e4]
+xlimits = [ 10, 13]
+ylimits = [-300, 1.4e4]
 legspot = 'upper right' # Determines where legend is placed
 
 font = FontProperties()
@@ -120,9 +142,9 @@ font.set_size(9)
 #%% Ploting Function
 test= 'Test_plot'
 ColorPalet_1 = ["#4db758","#145092","#000000"]
-def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
+def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title, off_set):
     num_of_scans = range(len(np.array(xrd_data)))
-    fig, ax = plt.subplots(figsize=(6.5,2.5)) #size is in inches    
+    fig, ax = plt.subplots(figsize=(2, 2.5)) #size is in inches    
     for n in num_of_scans:
         ax.plot(xrd_data[n][0,:], xrd_data[n][1,:] + n*off_set, 
         linewidth=lnthikness, color=ColorPalet[n], label=plot_names[n])
@@ -132,18 +154,18 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
     ax.tick_params(axis='x', labelsize=8)
     ax.tick_params(axis='y', labelsize=8)
     ax.set_xlim(xlimits)
-    # ax.set_ylim(ylimits)
+    ax.set_ylim(ylimits)
     ax.xaxis.set_minor_locator(MultipleLocator(2.5))
     ax.yaxis.set_ticklabels([])
     ax.tick_params(axis='y',length=0)
     ax.spines[['right', 'top']].set_visible(False)
-    # plt.title(plt_title)
+    plt.title(plt_title)
     
     #Revers order of legend lables
     handles, labels = ax.get_legend_handles_labels()
-    ax.legend(handles[::-1], labels[::-1])
+    # ax.legend(handles[::-1], labels[::-1])
 
-    svg_name_path = 'Plots/1_to_740days/' + svg_file_name + '.svg'
+    svg_name_path = 'Plots/1_to_740days/ForACerS_2023/' + svg_file_name + '.svg'
     # Uncomment next line to save the figure.
     # fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
     return fig
@@ -153,28 +175,35 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
 # order of inputs for xrd_quad_plot
 # xrd_data, plot_names, ColorPalet, svg_file_name, plt_title
 xrd_quad_plot(Al_axial, Data_lable , ColorPalet_1,\
-              'Al_axial_1to470day_no-offset','Al-axial')
+              'Al_axial_1to470day_forACerS_zoom1','Moderate-Al', off_set)
 # Uncomment this line to save the figure.
 # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
 #%% Al-corner plot
 
 xrd_quad_plot(Al_corner , Data_lable , ColorPalet_1,\
-              'Al_corner_1to470day_no-offset', 'Al-Corner')
+              'Al_corner_1to470day_forACerS_zoom1', 'High-Al', off_set)
 # Uncomment this line to save the figure.
 # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
 #%% Mg-Axial
 
-xrd_quad_plot(Mg_axial , Data_lable , ColorPalet_1, 'Mg_Axial_1to470day_no-offset',\
-              'Mg-Axial')
+xrd_quad_plot(Mg_axial , Data_lable , ColorPalet_1, 'Mg_Axial_1to470day_forACerS_zoom1',\
+              'Moderate-Mg', off_set)
 # Uncomment this line to save the figure.
 # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
 #%% Mg-Corner plot
 
-xrd_quad_plot(Mg_corner , Data_lable , ColorPalet_1, 'Mg_corner_1to470day_no-offset',\
-              'Mg-Corner')
+xrd_quad_plot(Mg_corner , Data_lable , ColorPalet_1, 'Mg_corner_1to470day_forACerS_zoom1',\
+              'High-Mg', off_set)
+# Uncomment this line to save the figure.
+# fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+
+#%% PO4-Free plot
+
+xrd_quad_plot(P_free , Data_lable , ColorPalet_1, 'PO4_free_1and28_day_forACerS_zoom1',\
+              'Phosphate-Free', off_set)
 # Uncomment this line to save the figure.
 # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 

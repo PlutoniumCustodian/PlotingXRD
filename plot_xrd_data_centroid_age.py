@@ -14,7 +14,7 @@ Cent_label = []
 
 #%% Import and organize XRD data 
 
-#Import data for unactivated PC
+
 #This section will read only the diffraction data of the  csv  files in the folder
 # at the path "datapath" into a data frame.
 datpath = 'Files_organized_for_plots/Centroid_age' # directory where data is 
@@ -48,10 +48,11 @@ for n in f_howmany:
     Centroid.append(my_data_extract(n))
     
 #%% Name things
-Cent_label.append('24 hours')
+Cent_label.append('1 day')
 Cent_label.append('7 days')
 Cent_label.append('14 days')
 Cent_label.append('28 days')
+Cent_label.append('510 days')
 
 #%% Settings for batch of graphs
 #Values for setting that are used multple places
@@ -68,11 +69,12 @@ font.set_size(9)
 
 #%% Set up plotting function
 # test= 'Test_plot'
-ColorPalet_1 = ['#ff9d00', '#e63940', '#9a005d', '#1f005c', '#ffa5e6', 
-                '#e27cb2', '#c1557f', '#9e2f4f' ,'#770224']
+
+ColorPalet_1 = ['#478d02', '#008068', '#00699c','#02458d','#000000']
+
 def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
     num_of_scans = range(len(np.array(xrd_data)))
-    fig, ax = plt.subplots(figsize=(7.08, 6)) #size is in inches    
+    fig, ax = plt.subplots(figsize=(3, 3)) #size is in inches    
     for n in num_of_scans:
         ax.plot(xrd_data[n][0,:], xrd_data[n][1,:] + n*off_set, 
         linewidth=lnthikness, color=ColorPalet[n], label=plot_names[n])
@@ -89,10 +91,11 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
     #plt.title(plt_title)
     # ax.legend()
     #Revers order of legend lables
-    handles, labels = ax.get_legend_handles_labels()
-    ax.legend(handles[::-1], labels[::-1])
+    # handles, labels = ax.get_legend_handles_labels()
+    # ax.legend(handles[::-1], labels[::-1])
+    ax.spines[['right', 'top']].set_visible(False) # get rid of box around plot
 
-    svg_name_path = 'Plots/' + svg_file_name + '.svg'
+    svg_name_path = 'Plots/1_to_740days/ForACerS_2023/' + svg_file_name + '.svg'
     # Uncomment this line to save the figure.
     fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
     return fig
@@ -100,6 +103,6 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
 #%% Centroid plots
 
 xrd_quad_plot(Centroid, Cent_label , ColorPalet_1,\
-              'Centroid_at_different_age_Comps_no_offset','Centroid')
+              'Centroid_at_different_age_ACerS_no_offset5','Centroid')
 
 

@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator
 from matplotlib.font_manager import FontProperties
 #%% Set location of data
-datpath = 'Files_organized_for_plots/Water_wash_vs_others/' # directory where data is 
+datpath = 'Files_organized_for_plots/PO4_interculated_LDH/' # directory where data is 
 #stored relative to py script location
 f_name = (os.listdir(datpath))#list of files in the directory of datpath
 print(pd.DataFrame(f_name))
@@ -20,7 +20,7 @@ print(pd.DataFrame(f_name))
 
 XRDdata = []
 #Name your data
-XRD_label = ['M-S-H Nied 2016', 'Phosphoric acid intercalated LDH', 'This study']
+XRD_label = [ 'Calcined hydrotalcite', '1st Wash', '1st Wash 2nd scan', '2nd wash', 'P-Axial aged 28 days']
 
 #%% Import data
 #This section will read only the diffraction data of the  csv  files in the folder
@@ -56,8 +56,8 @@ for n in f_howmany:
     
 #%% Settings for batch of graphs
 #Values for setting that are used multple places
-off_set = .5 #used to shift graphs up or down
-lnthikness= .5
+off_set = .0 #used to shift graphs up or down
+lnthikness= 0.5
 xlimits = [ 5, 65]
 ylimits = [.25, 3]
 legspot = 'upper right' # Determines where legend is placed
@@ -68,11 +68,11 @@ font.set_name('Arial')
 font.set_size(9)
 
 #%% Ploting Function
-
-ColorPalet_1 = ['#17045c', '#73005d', '#b20046', '#d80c1d']
+test= 'Test_plot'
+ColorPalet_1 = ['#000000', '#73005d', '#b20046', '#d80c1d']
 def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
     num_of_scans = range(len(xrd_data))
-    fig, ax = plt.subplots(figsize=(7.08,6)) #size is in inches    
+    fig, ax = plt.subplots(figsize=(6,2.5)) #size is in inches    
     for n in num_of_scans:
         ax.plot(xrd_data[n][0,:], xrd_data[n][1,:] + n*off_set, 
         linewidth=lnthikness, color=ColorPalet[n], label=plot_names[n])
@@ -82,78 +82,108 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title):
     ax.tick_params(axis='x', labelsize=8)
     ax.tick_params(axis='y', labelsize=8)
     ax.set_xlim(xlimits)
-    ax.set_ylim(ylimits)
+    # ax.set_ylim(ylimits)
     ax.xaxis.set_minor_locator(MultipleLocator(2.5))
     ax.yaxis.set_ticklabels([])
     ax.tick_params(axis='y',length=0)
     plt.title(plt_title)
+    ax.spines[['right', 'top']].set_visible(False)
     
-    #Revers order of legend lables
-    handles, labels = ax.get_legend_handles_labels()
-    ax.legend(handles[::-1], labels[::-1],loc='upper right')
+    # #Revers order of legend lables
+    # handles, labels = ax.get_legend_handles_labels()
+    # ax.legend(handles[::-1], labels[::-1],loc='upper right')
 
-    svg_name_path = 'Plots/Water_wash_vs_others/' + svg_file_name + '.svg'
+    svg_name_path = 'Plots/PO4-Interculated_LDH/' + svg_file_name + '.svg'
     # Uncomment this line to save the figure.
     # fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
     return fig
 
-#%% Plot
+#%% Plot Calcined Hydrotalcite
 
-xrd_quad_plot(XRDdata, XRD_label, ColorPalet_1, 'Water_wash_vs_others', '')
-
-#%% manualy adjustable plot
-ColorPalet_1 = ['#17045c', '#73005d', '#b20046', '#d80c1d']
-fig, ax = plt.subplots(figsize=(7.08, 6)) #size is in inches    
+# xrd_quad_plot(XRDdata, XRD_label, ColorPalet_1, 'name_here', '')
 n=0
-ax.plot(XRDdata[n][0,:], XRDdata[n][1,:] - .45, linewidth=lnthikness, color=ColorPalet_1[n], label=XRD_label[n])
-n=1
-ax.plot(XRDdata[n][0,:], XRDdata[n][1,:] + .3, linewidth=lnthikness, color=ColorPalet_1[n], label=XRD_label[n])
-n=2
-ax.plot(XRDdata[n][0,:], XRDdata[n][1,:] + 1.2, linewidth=lnthikness, color=ColorPalet_1[n], label=XRD_label[n])
+fig, ax = plt.subplots(figsize=(6,2.5)) #size is in inches    
+ax.plot(XRDdata[n][0,:], XRDdata[n][1,:], 
+            linewidth=lnthikness, label=XRD_label[n])
 
 ax.set_xlabel("2θ (degrees)", fontsize=9)
 ax.set_ylabel("Intensity", fontsize=9)
 ax.tick_params(axis='x', labelsize=8)
 ax.tick_params(axis='y', labelsize=8)
-ax.set_xlim( [5, 65])
-ax.set_ylim([0,2.5])
+ax.set_xlim(xlimits)
+# ax.set_ylim(ylimits)
 ax.xaxis.set_minor_locator(MultipleLocator(2.5))
 ax.yaxis.set_ticklabels([])
 ax.tick_params(axis='y',length=0)
 # plt.title(plt_title)
- 
-#Revers order of legend lables
-handles, labels = ax.get_legend_handles_labels()
-ax.legend(handles[::-1], labels[::-1],loc='upper right')
-svg_name_path = 'Plots/Water_wash_vs_others/' + 'Water_wash_vs_others' + '.svg'
+ax.spines[['right', 'top']].set_visible(False)
+
+# #Revers order of legend lables
+# handles, labels = ax.get_legend_handles_labels()
+# ax.legend(handles[::-1], labels[::-1],loc='upper right')
+
+svg_name_path = 'Plots/PO4-Interculated_LDH/' + 'Calcined_hydrotalcite_17May2023' + '.svg'
 # Uncomment this line to save the figure.
 # fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
 
-#%% just my PO4-LDH with N-A-S-H adjustable plot
-ColorPalet_1 = ['#17045c', '#73005d', '#b20046', '#d80c1d']
-fig, ax = plt.subplots(figsize=(7.08, 6)) #size is in inches    
-# n=0
-# ax.plot(XRDdata[n][0,:], XRDdata[n][1,:] - .45, linewidth=lnthikness, color=ColorPalet_1[n], label=XRD_label[n])
-# n=1
-# ax.plot(XRDdata[n][0,:], XRDdata[n][1,:] + .3, linewidth=lnthikness, color=ColorPalet_1[n], label=XRD_label[n])
+#%% Plot dirty PO4-LDH
+
+n=1
+fig, ax = plt.subplots(figsize=(6,2.5)) #size is in inches    
+ax.plot(XRDdata[n][0,:], XRDdata[n][1,:], 
+            linewidth=lnthikness, label=XRD_label[n])
 n=2
-ax.plot(XRDdata[n][0,:], XRDdata[n][1,:] + 0.1, linewidth=lnthikness, color=ColorPalet_1[n], label=XRD_label[n])
+ax.plot(XRDdata[n][0,:], XRDdata[n][1,:], 
+            linewidth=lnthikness, label=XRD_label[n])
+n=3
+ax.plot(XRDdata[n][0,:], XRDdata[n][1,:] + .6, 
+            linewidth=lnthikness, label=XRD_label[n])
+ax.set_xlabel("2θ (degrees)", fontsize=9)
+ax.set_ylabel("Intensity", fontsize=9)
+ax.tick_params(axis='x', labelsize=8)
+ax.tick_params(axis='y', labelsize=8)
+ax.set_xlim(xlimits)
+# ax.set_ylim(ylimits)
+ax.xaxis.set_minor_locator(MultipleLocator(2.5))
+ax.yaxis.set_ticklabels([])
+ax.tick_params(axis='y',length=0)
+# plt.title(plt_title)
+ax.spines[['right', 'top']].set_visible(False)
+
+# #Revers order of legend lables
+handles, labels = ax.get_legend_handles_labels()
+ax.legend(handles[::-1], labels[::-1],loc='upper right')
+
+svg_name_path = 'Plots/PO4-Interculated_LDH/' + 'Atempted_PO4-LDH_memorry_effect' + '.svg'
+# Uncomment this line to save the figure.
+# fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
+
+#%% Plot dirty PO4-LDH vs P-axial
+
+n=1
+fig, ax = plt.subplots(figsize=(6,2.5)) #size is in inches    
+ax.plot(XRDdata[n][0,:], XRDdata[n][1,:], 
+            linewidth=lnthikness, label=XRD_label[n])
+n=4
+ax.plot(XRDdata[n][0,:], XRDdata[n][1,:], 
+            linewidth=lnthikness, label=XRD_label[n])
 
 ax.set_xlabel("2θ (degrees)", fontsize=9)
 ax.set_ylabel("Intensity", fontsize=9)
 ax.tick_params(axis='x', labelsize=8)
 ax.tick_params(axis='y', labelsize=8)
-ax.set_xlim( [5, 65])
-ax.set_ylim([0,1.5])
+ax.set_xlim(xlimits)
+# ax.set_ylim(ylimits)
 ax.xaxis.set_minor_locator(MultipleLocator(2.5))
 ax.yaxis.set_ticklabels([])
 ax.tick_params(axis='y',length=0)
 # plt.title(plt_title)
-ax.spines[['right', 'top']].set_visible(False) # get rid of box around plot 
+ax.spines[['right', 'top']].set_visible(False)
 
-#Revers order of legend lables
-# handles, labels = ax.get_legend_handles_labels()
-# ax.legend(handles[::-1], labels[::-1],loc='upper right')
-svg_name_path = 'Plots/Water_wash_vs_others/' + 'Water_wash' + '.svg'
+# #Revers order of legend lables
+handles, labels = ax.get_legend_handles_labels()
+ax.legend(handles[::-1], labels[::-1],loc='upper right')
+
+svg_name_path = 'Plots/PO4-Interculated_LDH/' + 'dirty_PO4-LDH_vs_P-axial' + '.svg'
 # Uncomment this line to save the figure.
 # fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")

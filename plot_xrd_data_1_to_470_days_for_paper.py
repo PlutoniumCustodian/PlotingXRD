@@ -156,17 +156,19 @@ ColorK = [ '#8a8a8a','#626161', '#343433', '#000000'] # Gray
 ColorPalet_1 = ["#4db758","#145092","#000000"]
 
 #%% Ploting Function
-test= 'Test_plot'
 
 def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title, off_set):
     num_of_scans = range(len(np.array(xrd_data)))
-    fig, ax = plt.subplots(figsize=(3.15, 2.5)) #size is in inches x, y    
+    fig, ax = plt.subplots() 
+    fig.set_figwidth(3.24) #size is in inches
+    fig.set_figheight(2.5) #size is in inches
+    # fig.tight_layout(pad=0.0)
     for n in num_of_scans:
         ax.plot(xrd_data[n][0,:], xrd_data[n][1,:] + n*off_set, 
         linewidth=lnthikness, color=ColorPalet[n], label=plot_names[n])
 
-    ax.set_xlabel("2θ (degrees)", fontsize=9)
-    ax.set_ylabel("Intensity", fontsize=9)
+    # ax.set_xlabel("2θ (degrees)", fontsize=9)
+    # ax.set_ylabel("Intensity", fontsize=9)
     ax.tick_params(axis='x', labelsize=8)
     ax.tick_params(axis='y', labelsize=8)
     ax.set_xlim(xlimits)
@@ -174,6 +176,7 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title, of
     ax.xaxis.set_minor_locator(MultipleLocator(2.5))
     ax.yaxis.set_ticklabels([])
     ax.tick_params(axis='y',length=0)
+    # ax.axes.xaxis.set_ticklabels([])
     ax.spines[['right', 'top']].set_visible(False)
     plt.title(plt_title, loc='right', fontsize=9)
     
@@ -191,30 +194,144 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title, of
 # order of inputs for xrd_quad_plot
 # xrd_data, plot_names, ColorPalet, svg_file_name, plt_title
 xrd_quad_plot(Al_axial, Data_lable , ColorB,\
-              'Al_axial_1to470day_forpaper','Moderate-Aluminum', off_set)
+              'Al_axial_1to470day_forpaper2','Moderate-Aluminum', off_set)
 
 #%% Al-corner plot
 
 xrd_quad_plot(Al_corner , Data_lable , ColorB,\
-              'Al_corner_1to470day_forpaper', 'High-Aluminum', 13500)
+              'Al_corner_1to470day_forpaper2', 'High-Aluminum', 13500)
 
 #%% Mg-Axial
 
-xrd_quad_plot(Mg_axial , Data_lable , ColorG, 'Mg_Axial_1to470day_forpaper',\
+xrd_quad_plot(Mg_axial , Data_lable , ColorG, 'Mg_Axial_1to470day_forpaper2',\
               'Moderate-Magnesium', off_set)
 
 #%% Mg-Corner plot
 
-xrd_quad_plot(Mg_corner , Data_lable , ColorG, 'Mg_corner_1to470day_forpaper',\
+xrd_quad_plot(Mg_corner , Data_lable , ColorG, 'Mg_corner_1to470day_forpape2r',\
               'High-Magnesium', off_set)
 
 #%% PO4-Free plot
 
-xrd_quad_plot(P_free , Data_lable , ColorO, 'PO4_free_1and28_day_forpaper',\
+xrd_quad_plot(P_free , Data_lable , ColorO, 'PO4_free_1and28_day_forpaper2',\
               'No-Phosphate', 7000)
 
 #%% Centroid plot
 
-xrd_quad_plot(Centroid , Data_lable , ColorK, 'Centroid_1to_510day_forpaper',\
+xrd_quad_plot(Centroid , Data_lable , ColorK, 'Centroid_1to_510day_forpaper2',\
               'High-Phosphate', 7000)
+
+#%% multy plot function
+
+# You need to have already defined a fig ans axis for this function to work
+def plot_loop(ax, xrd_data, plot_names, ColorPalet, off_set):
+    num_of_scans = range(len(np.array(xrd_data)))    
+    for n in num_of_scans:
+     ax.plot(xrd_data[n][0,:], xrd_data[n][1,:] + n*off_set, 
+     linewidth=lnthikness, color=ColorPalet[n], label=plot_names[n])
+     
+     # ax.set_xlabel("2θ (degrees)", fontsize=9)
+     # ax.set_ylabel("Intensity", fontsize=9)
+     ax.tick_params(axis='x', labelsize=8)
+     ax.tick_params(axis='y', labelsize=8)
+     ax.set_xlim(xlimits)
+     # ax.set_ylim(ylimits)
+     ax.xaxis.set_minor_locator(MultipleLocator(2.5))
+     ax.yaxis.set_ticklabels([])
+     ax.tick_params(axis='y',length=0)
+     # ax.axes.xaxis.set_ticklabels([])
+     ax.spines[['right', 'top']].set_visible(False)
+     
+     #Revers order of legend lables
+     # handles, labels = ax.get_legend_handles_labels()
+     # ax.legend(handles[::-1], labels[::-1])
+     
+def subplot_title(ax, text, set_color):
+    ax.set_title(text, loc='right', fontsize=8, fontstyle='normal', color=set_color)
+
+    
+#%% Grid of plots
+
+fig = plt.figure(figsize=(8.5, 10)) # , layout="constrained", , layout="constrained"
+spec = fig.add_gridspec(ncols=2, nrows=3)
+plt.subplots_adjust(hspace=0.2, wspace=0.05)
+
+ax0 = fig.add_subplot(spec[0, 0])
+plot_loop(ax0, Al_axial, Data_lable , ColorB, off_set)
+subplot_title(ax0,'Moderate-Aluminum',ColorB[3])
+ax0.axes.xaxis.set_ticklabels([])
+
+ax1 = fig.add_subplot(spec[0, 1])
+n=0
+H_Al_off = 14000
+n1 = .6
+n2 = .55
+ax1.plot(Al_corner[n][0,:], Al_corner[n][1,:] + n*H_Al_off, 
+         linewidth=lnthikness, color=ColorB[n], label=Data_lable)
+n=1
+ax1.plot(Al_corner[n][0,:], Al_corner[n][1,:] + ((n - 1) + n1)*H_Al_off, 
+         linewidth=lnthikness, color=ColorB[n], label=Data_lable)
+n=2
+ax1.plot(Al_corner[n][0,:], Al_corner[n][1,:] + ((n - 1) + n2)*H_Al_off, 
+         linewidth=lnthikness, color=ColorB[n], label=Data_lable)
+n=3
+ax1.plot(Al_corner[n][0,:], Al_corner[n][1,:] + ((n - 1) + n1)*H_Al_off, 
+         linewidth=lnthikness, color=ColorB[n], label=Data_lable)
+
+
+# ax.set_xlabel("2θ (degrees)", fontsize=9)
+# ax.set_ylabel("Intensity", fontsize=9)
+ax1.tick_params(axis='x', labelsize=8)
+ax1.tick_params(axis='y', labelsize=8)
+ax1.set_xlim(xlimits)
+# ax.set_ylim(ylimits)
+ax1.xaxis.set_minor_locator(MultipleLocator(2.5))
+ax1.yaxis.set_ticklabels([])
+ax1.tick_params(axis='y',length=0)
+# ax.axes.xaxis.set_ticklabels([])
+ax1.spines[['right', 'top']].set_visible(False)
+subplot_title(ax1,'High-Aluminum', ColorB[3])
+ax1.axes.xaxis.set_ticklabels([])
+
+ax2 = fig.add_subplot(spec[1, 0])
+plot_loop(ax2, Mg_axial, Data_lable , ColorG, off_set)
+subplot_title(ax2,'Moderate-Magnesium',ColorG[3])
+ax2.axes.xaxis.set_ticklabels([])
+ax2.set_ylabel("Intensity", fontsize=9)
+
+ax3 = fig.add_subplot(spec[1, 1])
+plot_loop(ax3, Mg_corner, Data_lable , ColorG, 11000)
+subplot_title(ax3,'High-Magnesium',ColorG[3])
+ax3.axes.xaxis.set_ticklabels([])
+
+ax4 = fig.add_subplot(spec[2, 0])
+plot_loop(ax4, P_free, Data_lable , ColorO, 7000)
+subplot_title(ax4,'No-Phosphate',ColorO[3])
+
+ax5 = fig.add_subplot(spec[2, 1])
+plot_loop(ax5, Centroid, Data_lable , ColorK, 7000)
+subplot_title(ax5,'High-Phosphate',ColorK[3])
+
+
+# This section added a big frame around the set of plots so you can make lables for shared axis
+fig.add_subplot(111, frameon=False)
+# hide tick and tick label of the big axis
+plt.tick_params(labelcolor='none', which='both', top=False, bottom=False, left=False, right=False)
+plt.xlabel("2θ (degrees)", fontsize=9)
+# plt.ylabel("Intensity")
+
+fig.savefig("Plots/1_to_740days/XRD_Paper/time_series_V1.svg", transparent=False, bbox_inches="tight")
+
+# plt.close('all')
+
+#%%
+
+fig, axes = plt.subplots(4, 2, sharex=True, sharey=True, figsize=(6,15))
+# add a big axis, hide frame
+fig.add_subplot(111, frameon=False)
+# hide tick and tick label of the big axis
+plt.tick_params(labelcolor='none', which='both', top=False, bottom=False, left=False, right=False)
+plt.xlabel("common X")
+plt.ylabel("common Y")
+
 

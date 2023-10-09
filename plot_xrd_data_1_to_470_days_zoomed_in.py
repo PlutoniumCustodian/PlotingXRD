@@ -11,9 +11,10 @@ from matplotlib.font_manager import FontProperties
 
 Al_axial = []
 Al_corner = []
-# Centroid = []
+Centroid = []
 Mg_axial = []
 Mg_corner = []
+P_free = []
 
 
 Data_lable = ['1 day', '28 days', '470 days']
@@ -58,10 +59,10 @@ for x in f_howmany:
 
 Al_axial.append(my_data_extract(0))
 Al_corner.append(my_data_extract(1))
-# Centroid.append(my_data_extract(2))
+Centroid.append(my_data_extract(2))
 Mg_axial.append(my_data_extract(3))
 Mg_corner.append(my_data_extract(4))
-
+P_free.append(my_data_extract(9))
 
 # Import data 1mL NaOH to 1g PC aged 28 day
 #This section will read only the diffraction data of the  csv  files in the folder
@@ -79,9 +80,10 @@ for x in f_howmany:
 
 Al_axial.append(my_data_extract(0))
 Al_corner.append(my_data_extract(1))
-# Centroid.append(my_data_extract(2))
+Centroid.append(my_data_extract(2))
 Mg_axial.append(my_data_extract(3))
 Mg_corner.append(my_data_extract(4))
+P_free.append(my_data_extract(6))
 
 # Import data 1mL NaOH to 1g PC aged 470 day
 #This section will read only the diffraction data of the  csv  files in the folder
@@ -99,9 +101,10 @@ for x in f_howmany:
 
 Al_axial.append(my_data_extract(0))
 Al_corner.append(my_data_extract(3))
-# Centroid.append(my_data_extract(2))
+Centroid.append(my_data_extract(4))
 Mg_axial.append(my_data_extract(1))
 Mg_corner.append(my_data_extract(2))
+P_free.append(my_data_extract(5))
 
 #%% print maximum value for each scan
 def maxcount(xrd_data):
@@ -123,45 +126,49 @@ maxcount(Mg_corner)
 #%% Settings for batch of graphs
 #Values for setting that are used multple places
 off_set = 0 #used to shift graphs up or down
-lnthikness= 1
-xlimits = [ 10, 13]
-ylimits = [-300, 2.8e4]
+lnthikness= 1.5
+xlimits = [ 8.5, 13]
+ylimits = [600, 0.50e4]
 legspot = 'upper right' # Determines where legend is placed
 
-font = FontProperties()
-font.set_family('sans-serf')
-font.set_name('Arial')
-font.set_size(9)
+# font = FontProperties()
+# font.set_family('sans-serf')
+# font.set_name('Arial')
+# font.set_size(9)
 
 #%% Ploting Function
-test= 'Test_plot'
-ColorPalet_1 = ["#4db758","#145092","#000000"]
+
+ColorPalet_1 = ["#ffb14e","#008e00","#000000"]
+lnstyle = ['dotted', 'dashed', 'solid']
 def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title, off_set):
     num_of_scans = range(len(np.array(xrd_data)))
-    fig, ax = plt.subplots(figsize=(2.5, 2.5)) #size is in inches    
+    plt.style.use('Input/publish.mplstyle')
+    fig, ax = plt.subplots(figsize=(1.75, 3.5)) #size is in inches 
+    plt.axvline(11.65, color='gray')
     for n in num_of_scans:
         ax.plot(xrd_data[n][0,:], xrd_data[n][1,:] + n*off_set, 
-        linewidth=lnthikness, color=ColorPalet[n], label=plot_names[n])
+        linewidth=lnthikness, color=ColorPalet[n], label=plot_names[n]) #linestyle=lnstyle[n],
 
-    ax.set_xlabel("2θ (degrees)", fontsize=9)
-    ax.set_ylabel("Intensity", fontsize=9)
-    ax.tick_params(axis='x', labelsize=8)
-    ax.tick_params(axis='y', labelsize=8)
+    ax.set_xlabel("2θ") #, fontsize=9)
+    ax.set_ylabel("Intensity") #, fontsize=9)
+    # ax.tick_params(axis='x', labelsize=8)
+    # ax.tick_params(axis='y', labelsize=8)
     ax.set_xlim(xlimits)
     ax.set_ylim(ylimits)
-    ax.xaxis.set_minor_locator(MultipleLocator(2.5))
+    ax.xaxis.set_minor_locator(MultipleLocator(.5))
     ax.yaxis.set_ticklabels([])
     ax.tick_params(axis='y',length=0)
     ax.spines[['right', 'top']].set_visible(False)
-    plt.title(plt_title)
+    plt.title(plt_title,fontsize = 14)
+    
     
     #Revers order of legend lables
-    handles, labels = ax.get_legend_handles_labels()
+    # handles, labels = ax.get_legend_handles_labels()
     # ax.legend(handles[::-1], labels[::-1])
 
-    svg_name_path = 'Plots/1_to_740days/ForACerS_2023/' + svg_file_name + '.svg'
+    svg_name_path = 'Plots/1_to_740days/XRD_Paper/zoomed_on_003/' + svg_file_name + '.svg'
     # Uncomment next line to save the figure.
-    # fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
+    fig.savefig(svg_name_path, transparent=False, bbox_inches="tight")
     return fig
 
 #%% Al-axial plot
@@ -169,83 +176,48 @@ def xrd_quad_plot(xrd_data, plot_names, ColorPalet, svg_file_name, plt_title, of
 # order of inputs for xrd_quad_plot
 # xrd_data, plot_names, ColorPalet, svg_file_name, plt_title
 xrd_quad_plot(Al_axial, Data_lable , ColorPalet_1,\
-              'Al_axial_1to470day_forACerS','Al-axial', off_set)
+              'M-Al_2','Moderate-aluminum', off_set)
 # Uncomment this line to save the figure.
-# fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+# fig.savefig('Plots/ledgend.svg', transparent=False, bbox_inches="tight")
 
 #%% Al-corner plot
 
 xrd_quad_plot(Al_corner , Data_lable , ColorPalet_1,\
-              'Al_corner_1to470day_forACerS', 'Al-Corner', off_set)
+              'H-Al_2', 'High-aluminum', off_set)
 # Uncomment this line to save the figure.
 # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+
 
 #%% Mg-Axial
 
-xrd_quad_plot(Mg_axial , Data_lable , ColorPalet_1, 'Mg_Axial_1to470day_forACerS',\
-              'Mg-Axial', off_set)
+xrd_quad_plot(Mg_axial , Data_lable , ColorPalet_1, 'M-Mg_3',\
+              'Moderate-magnesium', off_set)
+plt.axvline(11.65, color='gray')
 # Uncomment this line to save the figure.
 # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
-#%% Mg-Corner plot
+#%% Mg-corner
 
-xrd_quad_plot(Mg_corner , Data_lable , ColorPalet_1, 'Mg_corner_1to470day_forACerS',\
-              'Mg-Corner', off_set)
+xrd_quad_plot(Mg_corner , Data_lable , ColorPalet_1, 'H-Mg_2',\
+              'High-magnesium', off_set)
+plt.axvline(11.65, color='gray')
 # Uncomment this line to save the figure.
 # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
-# #%% P-Axial
+#%% Centroid plot
 
-# xrd_quad_plot(P_axial , Data_lable , ColorPalet_1, 'P_Axial_1to28day',\
-#               'P-axial')
-# # Uncomment this line to save the figure.
-# # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+xrd_quad_plot(Centroid , Data_lable , ColorPalet_1, 'H-P_2',\
+              'High-phosphate', off_set)
+# Uncomment this line to save the figure.
+# fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
-# #%% P-Corner plot
+#%% PO4-Free plot
 
-# xrd_quad_plot(P_corner , Data_lable , ColorPalet_1, 'P_corner_1to28day'\
-#               , 'P-Corner')
-# # Uncomment this line to save the figure.
-# # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
+xrd_quad_plot(P_free , Data_lable , ColorPalet_1, 'N-P_3',\
+              'No-phosphate', off_set)
+# plt.axvline(11.65, color='gray')
+# Uncomment this line to save the figure.
+# fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
-# #%% Si-Axial
 
-# xrd_quad_plot(Si_axial , Data_lable , ColorPalet_1, 'Si_Axial_1to28day'\
-#               , 'Si-axial')
-# # Uncomment this line to save the figure.
-# # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
 
-# #%% Si-Corner plot
-
-# xrd_quad_plot(Si_corner , Data_lable , ColorPalet_1, 'Si_corner_1to28day',\
-#                'Si-Corner')
-# # Uncomment this line to save the figure.
-# # fig.savefig('Plots/AL_halfmL_to_1g.svg', transparent=False, bbox_inches="tight")
-
-# # #%% single Al-Corner graph
-# # lnthikness= 0.5
-# # xlimits = [ 5, 65]
-# # ylimits = [0, 1.2e4]
-# # legspot = 'upper right' # Determines where legend is placed
-
-# # font = FontProperties()
-# # font.set_family('sans-serf')
-# # font.set_name('Arial')
-# # font.set_size(9)
-# # n=2
-
-# # fig, ax = plt.subplots(figsize=(8.08,3)) #size is in inches
-
-# # ax.plot(Al_corner[n][0,:], Al_corner[n][1,:], 
-# #     linewidth=lnthikness, color='#176100')
-# # ax.set_xlabel("Two Theta (degrees)", fontsize=9)
-# # ax.set_ylabel("Intensity (counts)", fontsize=9)
-# # ax.tick_params(axis='x', labelsize=8)
-# # ax.tick_params(axis='y', labelsize=8)
-# # ax.set_xlim(xlimits)
-# # ax.set_ylim(ylimits)
-# # ax.xaxis.set_minor_locator(MultipleLocator(2.5))
-# # # ax.yaxis.set_ticklabels([])
-# # ax.tick_params(axis='y',length=0)
-# # #plt.title(plt_title)
-# # # fig.savefig('Plots/AL_for_IO_poster.svg', transparent=False, bbox_inches="tight")

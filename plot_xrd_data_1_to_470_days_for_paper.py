@@ -320,7 +320,7 @@ plt.tick_params(labelcolor='none', which='both', top=False, bottom=False, left=F
 plt.xlabel("2θ (degrees)", fontsize=14)
 # plt.ylabel("Intensity")
 
-fig.savefig("Plots/1_to_740days/XRD_Paper/time_series_V5.svg", transparent=False, bbox_inches="tight")
+# fig.savefig("Plots/1_to_740days/XRD_Paper/time_series_V5.svg", transparent=False, bbox_inches="tight")
 
 # plt.close('all')
 
@@ -335,3 +335,78 @@ fig.savefig("Plots/1_to_740days/XRD_Paper/time_series_V5.svg", transparent=False
 # plt.ylabel("common Y")
 
 
+#%% Grid of plots alternate version
+
+fig = plt.figure(figsize=(13, 8)) # , layout="constrained", , layout="constrained"
+spec = fig.add_gridspec(ncols=3, nrows=2)
+plt.subplots_adjust(hspace=0.2, wspace=0.05)
+
+ax0 = fig.add_subplot(spec[1, 2])
+plot_loop(ax0, Al_axial, Data_lable , ColorB, off_set)
+subplot_title(ax0,'Moderate-Aluminum',ColorB[3])
+# ax0.axes.xaxis.set_ticklabels([])
+
+ax1 = fig.add_subplot(spec[0, 2])
+n=0
+H_Al_off = off_set #1400
+n1 = .6
+n2 = .55
+ax1.plot(Al_corner[n][0,:], Al_corner[n][1,:] + n*H_Al_off, 
+         linewidth=lnthikness, color=ColorB[n], label=Data_lable)
+n=1
+ax1.plot(Al_corner[n][0,:], Al_corner[n][1,:] + ((n - 1) + n1)*H_Al_off, 
+         linewidth=lnthikness, color=ColorB[n], label=Data_lable)
+n=2
+ax1.plot(Al_corner[n][0,:], Al_corner[n][1,:] + ((n - 1) + n2)*H_Al_off, 
+         linewidth=lnthikness, color=ColorB[n], label=Data_lable)
+n=3
+ax1.plot(Al_corner[n][0,:], Al_corner[n][1,:] + ((n - 1) + n1)*H_Al_off, 
+         linewidth=lnthikness, color=ColorB[n], label=Data_lable)
+
+
+# ax.set_xlabel("2θ (degrees)", fontsize=9)
+# ax.set_ylabel("Intensity", fontsize=9)
+ax1.tick_params(axis='x', labelsize=10)
+ax1.tick_params(axis='y', labelsize=10)
+ax1.set_xlim(xlimits)
+ax1.set_ylim(ylimits)
+ax1.xaxis.set_minor_locator(MultipleLocator(2.5))
+ax1.yaxis.set_ticklabels([])
+ax1.tick_params(axis='y',length=0)
+# ax.axes.xaxis.set_ticklabels([])
+ax1.spines[['right', 'top']].set_visible(False)
+subplot_title(ax1,'High-Aluminum', ColorB[3])
+ax1.axes.xaxis.set_ticklabels([])
+
+ax2 = fig.add_subplot(spec[1, 1])
+plot_loop(ax2, Mg_axial, Data_lable , ColorG, off_set)
+subplot_title(ax2,'Moderate-Magnesium',ColorG[3])
+# ax2.axes.xaxis.set_ticklabels([])
+# ax2.set_ylabel("Intensity", fontsize=14)
+
+ax3 = fig.add_subplot(spec[0, 1])
+plot_loop(ax3, Mg_corner, Data_lable , ColorG, off_set) #11000
+subplot_title(ax3,'High-Magnesium',ColorG[3])
+ax3.axes.xaxis.set_ticklabels([])
+
+ax4 = fig.add_subplot(spec[0, 0])
+plot_loop(ax4, P_free, Data_lable , ColorO, off_set) #7000
+ax4.axes.xaxis.set_ticklabels([])
+subplot_title(ax4,'No-Phosphate',ColorO[3])
+ax4.set_ylabel("Intensity", fontsize=14)
+
+ax5 = fig.add_subplot(spec[1, 0])
+plot_loop(ax5, Centroid, Data_lable , ColorK, off_set) #7000
+subplot_title(ax5,'High-Phosphate',ColorK[3])
+ax5.set_ylabel("Intensity", fontsize=14)
+
+# This section added a big frame around the set of plots so you can make lables for shared axis
+fig.add_subplot(111, frameon=False)
+# hide tick and tick label of the big axis
+plt.tick_params(labelcolor='none', which='both', top=False, bottom=False, left=False, right=False)
+plt.xlabel("2θ (degrees)", fontsize=14)
+# plt.ylabel("Intensity")
+
+# fig.savefig("Plots/1_to_740days/XRD_Paper/time_series_ppt_version.svg", transparent=False, bbox_inches="tight")
+
+# plt.close('all')
